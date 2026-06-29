@@ -3,5 +3,8 @@ package com.ussd_event_processor.repository;
 import com.ussd_event_processor.entity.CallDetailRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CallDetailRecordRepository extends JpaRepository<CallDetailRecord, Long> {
+import java.util.UUID;
+
+public interface CallDetailRecordRepository extends JpaRepository<CallDetailRecord, UUID> {
+
 }

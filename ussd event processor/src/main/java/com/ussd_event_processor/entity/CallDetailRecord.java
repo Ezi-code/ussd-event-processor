@@ -36,19 +36,17 @@ public class CallDetailRecord {
     @Column(name = "raw_line", nullable = true)
     private String rawLine;
 
-    public CallDetailRecord(UUID id, LocalDateTime recordStartDateTime, LocalDateTime recordEndDateTime, String msisdn, String imsi ) {
-        this.id = id;
+    public CallDetailRecord(
+            LocalDateTime recordStartDateTime,
+            LocalDateTime recordEndDateTime,
+            String msisdn,
+            String imsi
+    ) {
         this.recordStartDateTime = recordStartDateTime;
         this.recordEndDateTime = recordEndDateTime;
         this.msisdn = msisdn;
         this.imsi = imsi;
-
     }
 
-    public CallDetailRecord(UUID id, LocalDateTime recordStartDateTime, LocalDateTime recordEndDateTime, String msisdn) {
-        this.id = UUID.randomUUID();
-        this.recordStartDateTime = recordStartDateTime;
-        this.recordEndDateTime = recordEndDateTime;
-        this.msisdn = msisdn;
-    }
+
 }

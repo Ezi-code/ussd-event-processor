@@ -21,6 +21,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Component
 @Slf4j
@@ -109,5 +111,14 @@ public class FileWatcherService {
         entry.setRecordsFailed(failed);
         cdrLogRepository.save(entry);
         log.info("Processed {}: {} loaded, {} failed", fileName, success, failed);
+    }
+
+    public void deleteAllRecords(){
+        callDetailRepository.deleteAll();
+    }
+
+    public void deleteByID(UUID id){
+        callDetailRepository.deleteById(id);
+
     }
 }
