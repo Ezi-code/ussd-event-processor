@@ -1,8 +1,7 @@
-package com.ussd_event_processor;
+package com.ussd_event_processor.services;
 
 import com.ussd_event_processor.repository.CallDetailRecordRepository;
 import com.ussd_event_processor.repository.CdrLogRepository;
-import com.ussd_event_processor.services.FileWatcherService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
