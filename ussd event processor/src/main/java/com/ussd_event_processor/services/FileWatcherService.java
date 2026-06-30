@@ -23,6 +23,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service responsible for monitoring a specific folder for new CDR files and
+ * orchestrating their ingestion into the database.
+ *
+ * <p>It utilizes Spring Scheduling to poll the watch folder at a regular interval.
+ * Files are processed in batches and moved to a 'processed' directory upon completion.</p>
+ */
 @Service
 @Slf4j
 public class FileWatcherService {
@@ -45,9 +52,15 @@ public class FileWatcherService {
         this.cdrMapper = cdrMapper;
     }
 
+    /**
+     * Scheduled task that polls the watch folder for new files.
+     * The polling rate is configured via {@code cdr.poll-rate-ms}.
+     */
     @Scheduled(fixedRateString = "${cdr.poll-rate-ms:60000}")
     @Transactional
     public void pollFolder() {
+        /* Poll the watch folder for new files.*/
+
         File folder = new File(watchFolder);
         File[] files = folder.listFiles(File::isFile);
 
@@ -63,7 +76,14 @@ public class FileWatcherService {
         }
     }
 
+    /**
+     * Processes a single CDR file.
+     * Reads the file line by line, maps each line to an entity, and saves them in batches.
+     *
+     * @param file The CDR file to process.
+     */
     public void processFile(File file) {
+
         LocalDateTime startTime = LocalDateTime.now();
         int successCount = 0;
         int failedCount = 0;
@@ -109,12 +129,26 @@ public class FileWatcherService {
         recordProcessingLog(file.getName(), startTime, successCount, failedCount);
     }
 
+    /**
+     * Moves the processed file to the configured processed folder.
+     *
+     * @param file The file to move.
+     * @throws IOException If moving the file fails.
+     */
     private void moveToProcessed(File file) throws IOException {
         Path target = Paths.get(processedFolder, file.getName());
         Files.move(file.toPath(), target, StandardCopyOption.REPLACE_EXISTING);
         log.debug("Moved file to processed folder: {}", file.getName());
     }
 
+    /**
+     * Records the processing results (success/failure counts, timestamps) in the {@code cdr_log} table.
+     *
+     * @param fileName  The name of the processed file.
+     * @param startTime The time processing started.
+     * @param success   Number of successfully loaded records.
+     * @param failed    Number of failed records.
+     */
     private void recordProcessingLog(
             String fileName, LocalDateTime startTime, int success, int failed)
     {
@@ -128,6 +162,10 @@ public class FileWatcherService {
         cdrLogRepository.save(logEntry);
     }
 
+    /**
+     * Deletes all records from the {@code call_detail_records} table.
+     * Used for system maintenance or data reset.
+     */
     @Transactional
     public void deleteAllRecords() {
         callDetailRepository.deleteAll();

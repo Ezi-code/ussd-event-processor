@@ -5,6 +5,10 @@ import lombok.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * Entity representing a Call Detail Record (CDR) for USSD events.
+ * Maps to the {@code call_detail_records} table in the {@code ussd} schema.
+ */
 @Entity
 @Table(name = "call_detail_records", schema = "ussd")
 @Getter

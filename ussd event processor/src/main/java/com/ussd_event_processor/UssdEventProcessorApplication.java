@@ -11,6 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Main entry point for the USSD Event Processor application.
+ *
+ * <p>This Spring Boot application is responsible for processing USSD Call Detail Records (CDRs).
+ * It enables scheduling to support folder-based file monitoring.</p>
+ */
 @SpringBootApplication
 @EnableScheduling
 public class UssdEventProcessorApplication {

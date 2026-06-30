@@ -9,14 +9,17 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 
+/**
+ * Entity for tracking the processing of CDR files.
+ * Stores metadata about each file ingestion, including file name,
+ * processing duration, and success/failure statistics.
+ */
 @Entity
 @Table(name = "cdr_log")
 @Getter
 @Setter
 @NoArgsConstructor
 public class CdrLog {
-    /* CDR Log Model.*/
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
