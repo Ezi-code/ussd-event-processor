@@ -22,7 +22,7 @@ public class CallDetailRecord {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @Column(name = "event_timestamp", nullable = false)
+    @Column(name = "event_timestamp")
     private LocalDateTime eventTimestamp;
 
     @Column(name = "lac")
@@ -64,7 +64,7 @@ public class CallDetailRecord {
     @Column(name = "flag2")
     private Integer flag2;
 
-    @Column(name = "msisdn", length = 20)           // Key for Query API
+    @Column(name = "msisdn", length = 20, nullable = false)           // Key for Query API
     private String msisdn;
 
     @Column(name = "flag3")
@@ -73,7 +73,7 @@ public class CallDetailRecord {
     @Column(name = "mcc_mnc")
     private Integer mccMnc;
 
-    @Column(name = "imsi", length = 20)             // Key for Query API
+    @Column(name = "imsi", length = 20, nullable = false)             // Key for Query API
     private String imsi;
 
     @Column(name = "flag4")
